@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roadmap AVP/VP & Full Stack Java Engineer - Preparação Internacional</title>
+  <style>
+    :root {
+      --bg: #0b1120;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --accent: #38bdf8;
+      --accent-hover: #0284c7;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --success: #22c55e;
+      --badge-vp-bg: rgba(245, 158, 11, 0.15);
+      --badge-vp-border: #f59e0b;
+      --badge-vp-text: #fbbf24;
+      --badge-core-bg: rgba(56, 189, 248, 0.15);
+      --badge-core-border: #38bdf8;
+      --badge-core-text: #7dd3fc;
+      --badge-soft-bg: rgba(168, 85, 247, 0.15);
+      --badge-soft-border: #a855f7;
+      --badge-soft-text: #c084fc;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      padding: 2rem 1rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 900px;
+    }
+
+    header {
+      margin-bottom: 2rem;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+      color: var(--accent);
+    }
+
+    p.subtitle {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .controls-container {
+      position: sticky;
+      top: 1rem;
+      z-index: 10;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 1.2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.6);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .progress-bar-bg {
+      background-color: var(--card-border);
+      border-radius: 9999px;
+      height: 10px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      background: linear-gradient(90deg, var(--accent), var(--success));
+      height: 100%;
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    .search-wrapper {
+      position: relative;
+      width: 100%;
+    }
+
+    .search-input {
+      width: 100%;
+      background: #060b14;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      color: var(--text-main);
+      padding: 0.65rem 2.5rem 0.65rem 0.85rem;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .search-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+    }
+
+    .search-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .clear-search-btn {
+      position: absolute;
+      right: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 1rem;
+      display: none;
+    }
+
+    .clear-search-btn.visible {
+      display: block;
+    }
+
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--card-border);
+      padding-top: 0.8rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .filter-buttons {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      transition: all 0.2s;
+    }
+
+    .filter-btn.active {
+      background: var(--accent);
+      color: #0f172a;
+      font-weight: 600;
+      border-color: var(--accent);
+    }
+
+    .reset-btn {
+      background: transparent;
+      border: none;
+      color: #ef4444;
+      cursor: pointer;
+      font-size: 0.8rem;
+      text-decoration: underline;
+    }
+
+    .category-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .category-header {
+      margin-bottom: 1rem;
+    }
+
+    .category-header h2 {
+      font-size: 1.15rem;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .category-timeline {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+      font-weight: 500;
+    }
+
+    .task-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .task-item {
+      display: flex;
+      flex-direction: column;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 0.85rem;
+      border-radius: 8px;
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .task-item:hover {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: var(--card-border);
+    }
+
+    .task-main {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      cursor: pointer;
+    }
+
+    .task-item input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--text-muted);
+      border-radius: 4px;
+      margin-top: 3px;
+      outline: none;
+      cursor: pointer;
+      display: grid;
+      place-content: center;
+      flex-shrink: 0;
+      transition: border-color 0.2s, background-color 0.2s;
+    }
+
+    .task-item input[type="checkbox"]:checked {
+      background-color: var(--success);
+      border-color: var(--success);
+    }
+
+    .task-item input[type="checkbox"]:checked::before {
+      content: "";
+      width: 6px;
+      height: 10px;
+      border: solid #fff;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg) translate(-1px, -1px);
+    }
+
+    .task-content {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      width: 100%;
+    }
+
+    .task-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .task-title {
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.2s ease, text-decoration 0.2s ease;
+    }
+
+    .badge {
+      font-size: 0.7rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 9999px;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      white-space: nowrap;
+    }
+
+    .badge.core {
+      background: var(--badge-core-bg);
+      border: 1px solid var(--badge-core-border);
+      color: var(--badge-core-text);
+    }
+
+    .badge.vp {
+      background: var(--badge-vp-bg);
+      border: 1px solid var(--badge-vp-border);
+      color: var(--badge-vp-text);
+    }
+
+    .badge.soft {
+      background: var(--badge-soft-bg);
+      border: 1px solid var(--badge-soft-border);
+      color: var(--badge-soft-text);
+    }
+
+    .task-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .task-item.checked .task-title {
+      color: var(--text-muted);
+      text-decoration: line-through;
+    }
+
+    .notes-section {
+      margin-top: 0.65rem;
+      padding-top: 0.65rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .notes-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .notes-status {
+      font-size: 0.7rem;
+      color: var(--success);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .notes-status.visible {
+      opacity: 1;
+    }
+
+    .notes-textarea {
+      width: 100%;
+      min-height: 50px;
+      background: #060b14;
+      border: 1px solid var(--card-border);
+      border-radius: 6px;
+      color: var(--text-main);
+      padding: 0.5rem;
+      font-size: 0.8rem;
+      resize: vertical;
+      outline: none;
+      font-family: inherit;
+    }
+
+    .notes-textarea:focus {
+      border-color: var(--accent);
+    }
+
+    .no-results {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>AVP / VP & Full Stack Java Engineer Roadmap</h1>
+      <p class="subtitle">Preparação técnica completa para vagas internacionais corporativas (Wissen Calgary / Citigroup) com foco em patrocínio de visto.</p>
+    </header>
+
+    <div class="controls-container">
+      <div class="progress-wrapper">
+        <div class="progress-info">
+          <span>Progresso de Prontidão</span>
+          <span id="progress-percent">0%</span>
+        </div>
+        <div class="progress-bar-bg" style="margin-top: 0.5rem;">
+          <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+      </div>
+
+      <div class="search-wrapper">
+        <input 
+          type="text" 
+          id="search-input" 
+          class="search-input" 
+          placeholder="Buscar ferramentas ou arquiteturas (ex: MVC, Clean Architecture, DDD, Event-Driven, SASS)..." 
+        />
+        <button id="clear-search-btn" class="clear-search-btn" title="Limpar busca">&times;</button>
+      </div>
+
+      <div class="filter-bar">
+        <div class="filter-buttons">
+          <button class="filter-btn active" data-filter="all">Todos os Tópicos</button>
+          <button class="filter-btn" data-filter="core">Técnico Core</button>
+          <button class="filter-btn" data-filter="vp">Nível AVP/VP Liderança</button>
+          <button class="filter-btn" data-filter="soft">Inglês & Carreira</button>
+        </div>
+        <button class="reset-btn" id="reset-btn">Limpar dados salvos</button>
+      </div>
+    </div>
+
+    <div id="roadmap-tree"></div>
+  </div>
+
+  <script>
+    const roadmapData = [
+      {
+        category: "Fase 1: Low-Latency Java & JVM Internals",
+        timeline: "Semanas 1 a 3 • Foco: Domínio de Baixo Nível e Performance",
+        tasks: [
+          { 
+            id: "vp_concurrency", 
+            title: "Advanced Concurrency (java.util.concurrent)", 
+            desc: "ConcurrentHashMap, ReentrantLocks, Semaphores, CountDownLatch e resolução de Race Conditions / Deadlocks sem synchronized.", 
+            type: "core" 
+          },
+          { 
+            id: "vp_jmm", 
+            title: "Java Memory Model & Memory Visibility", 
+            desc: "Compreensão de Happens-Before guarantee, palavra-chave volatile, Atomic variables e CPU caches L1/L2/L3.", 
+            type: "vp" 
+          },
+          { 
+            id: "vp_jvm_tuning", 
+            title: "JVM Internals & GC Profiling", 
+            desc: "Young/Old Gen, Metaspace, coletores G1GC e ZGC. Diagnóstico de memory leaks com Heap Dumps (VisualVM/Eclipse MAT).", 
+            type: "core" 
+          },
+          { 
+            id: "vp_virtual_threads", 
+            title: "Java 21 Virtual Threads & Structured Concurrency", 
+            desc: "Uso do Project Loom para altíssima escala de I/O bloqueante em sistemas financeiros transacionais.", 
+            type: "vp" 
+          },
+          { 
+            id: "vp_spring_tx", 
+            title: "Spring Boot Deep Dive & Transaction Boundaries", 
+            desc: "Ciclo de vida do ApplicationContext, proxies dinâmicos, propagação transacional e controle de isolation levels no Hibernate/JPA.", 
+            type: "core" 
+          }
+        ]
+      },
+      {
+        category: "Fase 2: Arquitetura de Software: Padrões de Aplicação e Código",
+        timeline: "Semana 4 • Foco: Clean Architecture, DDD, MVC e Acoplamento",
+        tasks: [
+          { 
+            id: "arch_mvc_layered", 
+            title: "MVC & Layered Architecture (Camadas Tradicionais)", 
+            desc: "Separação estrita de Model, View e Controller; padrões Controller-Service-Repository e fluxo de DTOs para evitar vazamento de entidades.", 
+            type: "core" 
+          },
+          { 
+            id: "arch_clean_hexagonal", 
+            title: "Clean Architecture & Hexagonal (Ports and Adapters)", 
+            desc: "Isolamento absoluto do domínio de negócio contra frameworks, bancos e bibliotecas externas. Inversão de dependência em escala.", 
+            type: "vp" 
+          },
+          { 
+            id: "arch_ddd", 
+            title: "Domain-Driven Design (DDD Estratégico e Tático)", 
+            desc: "Mapeamento de Bounded Contexts, Aggregates, Value Objects, Domain Services e Domain Events na modelagem financeira corporativa.", 
+            type: "vp" 
+          },
+          { 
+            id: "arch_modular_monolith", 
+            title: "Modular Monolith vs. Microsserviços", 
+            desc: "Trade-offs de latência, governança de código, limites de módulos independentes e estratégias de decomposição de monólitos legados.", 
+            type: "vp" 
+          }
+        ]
+      },
+      {
+        category: "Fase 3: Frontend Core: HTML5, CSS3, SASS & Web Architecture",
+        timeline: "Semana 5 • Foco: Layout Moderno, Acessibilidade e Arquitetura CSS",
+        tasks: [
+          { 
+            id: "fe_html5_semantic", 
+            title: "HTML5 Semântico & Acessibilidade (WCAG / WAI-ARIA)", 
+            desc: "Estruturação semântica limpa, SEO técnico, atributos ARIA (aria-live, roles) e conformidade de acessibilidade para formulários financeiros.", 
+            type: "core" 
+          },
+          { 
+            id: "fe_css_layout", 
+            title: "CSS3 Avançado: Flexbox, CSS Grid & Responsive Design", 
+            desc: "Criação de dashboards complexos, mobile-first design, Container Queries, CSS Variables (Custom Properties) e cálculo de especificidade/Cascade.", 
+            type: "core" 
+          },
+          { 
+            id: "fe_sass_architecture", 
+            title: "SASS / SCSS & Metodologias de Estilo", 
+            desc: "Uso avançado de Mixins, Functions, Loops (@for, @each), nesting balanceado, estrutura 7-1 pattern e convenções BEM (Block Element Modifier).", 
+            type: "core" 
+          },
+          { 
+            id: "fe_css_in_js_modules", 
+            title: "CSS Modules, Tailwind CSS & Scoped Styles", 
+            desc: "Estratégias de isolamento de estilo em escala corporativa (evitando colisões globais), CSS Modules no bundling e integração com design systems.", 
+            type: "core" 
+          }
+        ]
+      },
+      {
+        category: "Fase 4: Modern UI: React, TypeScript & State Management",
+        timeline: "Semana 6 • Foco: Full Stack Proficiency (Citigroup Requisite)",
+        tasks: [
+          { 
+            id: "fs_react_ts", 
+            title: "React Moderno & TypeScript", 
+            desc: "Componentes funcionais com TypeScript estrito, Hooks avançados, virtualização de listas e otimização de re-renders com Profiler.", 
+            type: "core" 
+          },
+          { 
+            id: "fs_state_mgmt", 
+            title: "State Management & Data Fetching", 
+            desc: "Gerenciamento de estado complexo com Zustand ou Redux Toolkit; caching e sincronização assíncrona de dados via React Query.", 
+            type: "core" 
+          },
+          { 
+            id: "fs_graphql", 
+            title: "GraphQL APIs (Java + React Integration)", 
+            desc: "Design de Schemas, queries, mutations, subscriptions e resolução de performance com Dataloaders (mitigação do problema N+1).", 
+            type: "vp" 
+          },
+          { 
+            id: "fs_frontend_sec", 
+            title: "Frontend Banking Security (OWASP)", 
+            desc: "Mitigação de vulnerabilidades XSS, CSRF tokens, Content Security Policy (CSP) e armazenamento seguro de tokens JWT no browser.", 
+            type: "core" 
+          }
+        ]
+      },
+      {
+        category: "Fase 5: Enterprise Databases: Oracle RDBMS & NoSQL",
+        timeline: "Semanas 7 e 8 • Foco: PL/SQL, Caching e Otimização de Queries",
+        tasks: [
+          { 
+            id: "db_oracle_plsql", 
+            title: "Oracle SQL & PL/SQL Corporativo", 
+            desc: "Desenvolvimento e manutenção de Stored Procedures, Packages, Triggers, Functions e Cursores otimizados.", 
+            type: "core" 
+          },
+          { 
+            id: "db_tuning_execution", 
+            title: "Query Optimization & Execution Plans", 
+            desc: "Análise profunda de EXPLAIN PLAN, criação de índices B-Tree/Bitmap, hints de otimização e particionamento por Range/Hash.", 
+            type: "core" 
+          },
+          { 
+            id: "db_redis_caching", 
+            title: "Distributed Caching (Redis) & NoSQL", 
+            desc: "Padrões Cache-Aside, Write-Through, prevenção de Cache Stampede e modelagem de documentos flexíveis com NoSQL (MongoDB).", 
+            type: "core" 
+          },
+          { 
+            id: "db_audit_ledger", 
+            title: "Double-Entry Bookkeeping & Imutabilidade", 
+            desc: "Arquitetura de conciliação contábil por partidas dobradas, idempotência estrita de pagamentos e trilha de auditoria regulatória.", 
+            type: "vp" 
+          }
+        ]
+      },
+      {
+        category: "Fase 6: FinTech System Design & Event-Driven Architecture",
+        timeline: "Semanas 9 e 10 • Foco: Sistemas Distribuídos e Bancos Tier-1",
+        tasks: [
+          { 
+            id: "vp_event_driven", 
+            title: "Event-Driven & Low-Latency Messaging (Kafka)", 
+            desc: "Particionamento, balanceamento de offsets, semântica Exactly-Once e ordenação estrita em streams financeiros.", 
+            type: "core" 
+          },
+          { 
+            id: "vp_cqrs_eventsourcing", 
+            title: "CQRS & Event Sourcing Patterns", 
+            desc: "Separação de canais de escrita e leitura de alto desempenho; geração de read models especializados e trilhas imutáveis de transações.", 
+            type: "vp" 
+          },
+          { 
+            id: "vp_saga_outbox", 
+            title: "Distributed Consistency: Saga & Outbox Patterns", 
+            desc: "Coordenação de transações entre microsserviços via Saga (orquestrada/coreografada) e Transactional Outbox sem bloqueios 2PC.", 
+            type: "vp" 
+          },
+          { 
+            id: "vp_resilience", 
+            title: "Resilience Engineering (Resilience4j)", 
+            desc: "Circuit Breakers, Bulkheads, Rate Limiting distribuído e estratégias de fallback para conter falhas em cascata.", 
+            type: "core" 
+          },
+          { 
+            id: "vp_sys_design_mock", 
+            title: "Mock Interview: System Design Whiteboarding", 
+            desc: "Simulação de 45 min para desenhar sistemas de larga escala (ex: Real-time Payment Gateway, Stock Ticker Ingestion).", 
+            type: "vp" 
+          }
+        ]
+      },
+      {
+        category: "Fase 7: DevOps, Cloud (AWS/OpenShift) & AI Workflows",
+        timeline: "Semana 11 • Foco: Infraestrutura Corporativa e Ferramental Moderno",
+        tasks: [
+          { 
+            id: "devops_build_tools", 
+            title: "Build Automation & Quality: Maven / Gradle", 
+            desc: "Configuração avançada de multi-module builds, gerenciamento de plugins, profile injection e integração com SonarQube.", 
+            type: "core" 
+          },
+          { 
+            id: "devops_openshift_k8s", 
+            title: "OpenShift & Kubernetes Container Orchestration", 
+            desc: "Deploy corporativo em Red Hat OpenShift, gerenciamento de Pods, Deployments, Services, Routes, ConfigMaps e Secrets.", 
+            type: "core" 
+          },
+          { 
+            id: "devops_aws_cloud", 
+            title: "AWS Cloud Native Services", 
+            desc: "Arquitetura e deploy utilizando ECS/EKS, RDS Aurora, S3, IAM roles de segurança e monitoramento com CloudWatch.", 
+            type: "core" 
+          },
+          { 
+            id: "devops_cicd_jenkins", 
+            title: "CI/CD Pipelines (Jenkins / Docker)", 
+            desc: "Construção de pipelines declarativas no Jenkins, Docker multi-stage builds seguros e automação de testes integrados.", 
+            type: "core" 
+          },
+          { 
+            id: "devops_ai_workflows", 
+            title: "AI Tools for Enhanced Dev Workflows", 
+            desc: "Uso prático de Copilot/LLMs para geração rápida de suites de testes (JUnit/Mockito), refatoração de código legado e documentação.", 
+            type: "vp" 
+          }
+        ]
+      },
+      {
+        category: "Fase 8: Live Coding, Inglês Técnico & Carreira Internacional",
+        timeline: "Semana 12 • Foco: Raciocínio sob Pressão, STAR Method e Visto Canadá",
+        tasks: [
+          { 
+            id: "vp_dsa_patterns", 
+            title: "Algoritmos LeetCode Medium (Java)", 
+            desc: "Padrões prioritários: Two Pointers, Sliding Window, BFS/DFS em Grafos e manipulação eficiente de Strings/HashMaps.", 
+            type: "core" 
+          },
+          { 
+            id: "vp_talk_out_loud", 
+            title: "Técnica Talk-Out-Loud em Inglês", 
+            desc: "Prática diária de verbalizar raciocínio técnico, edge cases e cálculo de complexidade Big-O antes de codar.", 
+            type: "soft" 
+          },
+          { 
+            id: "vp_star_leadership", 
+            title: "Respostas Comportamentais (Método STAR)", 
+            desc: "Estruturar 6 a 8 histórias em inglês sobre liderança técnica, mediação de conflitos de arquitetura e mitigação de incidentes críticos.", 
+            type: "soft" 
+          },
+          { 
+            id: "vp_canadian_resume", 
+            title: "Canadian Resume Format (ATS Tailored)", 
+            desc: "Remover dados pessoais irrelevantes. Descrever impactos com métricas quantificáveis (ex: TPS, latência reduzida, economia de cloud).", 
+            type: "soft" 
+          },
+          { 
+            id: "vp_wissen_outreach", 
+            title: "Outreach Direto: Wissen Calgary & Relocation", 
+            desc: "Mapeamento e contato assertivo com tomadores de decisão da Wissen Canadá e empresas com visto (LMIA / Global Skills Strategy).", 
+            type: "soft" 
+          }
+        ]
+      }
+    ];
+
+    const STORAGE_KEY_CHECKED = "vp_fullstack_roadmap_completed";
+    const STORAGE_KEY_NOTES = "vp_fullstack_roadmap_notes";
+
+    let completedTasks = JSON.parse(localStorage.getItem(STORAGE_KEY_CHECKED)) || {};
+    let taskNotes = JSON.parse(localStorage.getItem(STORAGE_KEY_NOTES)) || {};
+    let currentFilter = "all";
+    let currentSearchTerm = "";
+    let debounceTimers = {};
+
+    const container = document.getElementById("roadmap-tree");
+    const progressFill = document.getElementById("progress-fill");
+    const progressPercent = document.getElementById("progress-percent");
+    const resetBtn = document.getElementById("reset-btn");
+    const filterButtons = document.querySelectorAll(".filter-btn");
+    const searchInput = document.getElementById("search-input");
+    const clearSearchBtn = document.getElementById("clear-search-btn");
+
+    function renderRoadmap() {
+      container.innerHTML = "";
+
+      let visibleCategories = 0;
+      const normalizedSearch = currentSearchTerm.trim().toLowerCase();
+
+      roadmapData.forEach((section) => {
+        const filteredTasks = section.tasks.filter((task) => {
+          const matchesFilter = currentFilter === "all" || task.type === currentFilter;
+          const matchesSearch = !normalizedSearch || 
+            task.title.toLowerCase().includes(normalizedSearch) || 
+            task.desc.toLowerCase().includes(normalizedSearch) || 
+            section.category.toLowerCase().includes(normalizedSearch);
+
+          return matchesFilter && matchesSearch;
+        });
+
+        if (filteredTasks.length === 0) return;
+
+        visibleCategories++;
+
+        const card = document.createElement("div");
+        card.className = "category-card";
+
+        const headerDiv = document.createElement("div");
+        headerDiv.className = "category-header";
+
+        const title = document.createElement("h2");
+        title.textContent = section.category;
+
+        const timeline = document.createElement("div");
+        timeline.className = "category-timeline";
+        timeline.textContent = section.timeline;
+
+        headerDiv.appendChild(title);
+        headerDiv.appendChild(timeline);
+        card.appendChild(headerDiv);
+
+        const list = document.createElement("ul");
+        list.className = "task-list";
+
+        filteredTasks.forEach((task) => {
+          const item = document.createElement("li");
+          item.className = `task-item ${completedTasks[task.id] ? "checked" : ""}`;
+
+          const main = document.createElement("div");
+          main.className = "task-main";
+
+          const checkbox = document.createElement("input");
+          checkbox.type = "checkbox";
+          checkbox.checked = !!completedTasks[task.id];
+          checkbox.id = `chk_${task.id}`;
+
+          const content = document.createElement("div");
+          content.className = "task-content";
+
+          const top = document.createElement("div");
+          top.className = "task-top";
+
+          const taskTitle = document.createElement("span");
+          taskTitle.className = "task-title";
+          taskTitle.textContent = task.title;
+
+          const badge = document.createElement("span");
+          badge.className = `badge ${task.type}`;
+          badge.textContent = task.type === "vp" ? "AVP/VP Level" : (task.type === "soft" ? "Soft & Career" : "Core Tech");
+
+          top.appendChild(taskTitle);
+          top.appendChild(badge);
+
+          const taskDesc = document.createElement("span");
+          taskDesc.className = "task-desc";
+          taskDesc.textContent = task.desc;
+
+          content.appendChild(top);
+          content.appendChild(taskDesc);
+
+          main.appendChild(checkbox);
+          main.appendChild(content);
+
+          main.addEventListener("click", (e) => {
+            if (e.target !== checkbox) {
+              checkbox.checked = !checkbox.checked;
+            }
+            toggleTask(task.id, checkbox.checked);
+          });
+
+          const notesSection = document.createElement("div");
+          notesSection.className = "notes-section";
+
+          const notesHeader = document.createElement("div");
+          notesHeader.className = "notes-header";
+
+          const notesLabel = document.createElement("span");
+          notesLabel.textContent = "Anotações / Recursos estudados:";
+
+          const saveStatus = document.createElement("span");
+          saveStatus.className = "notes-status";
+          saveStatus.id = `status_${task.id}`;
+          saveStatus.textContent = "✓ Salvo";
+
+          notesHeader.appendChild(notesLabel);
+          notesHeader.appendChild(saveStatus);
+
+          const textarea = document.createElement("textarea");
+          textarea.className = "notes-textarea";
+          textarea.placeholder = "Ex: Comparei Ports and Adapters com Clean Architecture; anotei uso de CQRS com Kafka...";
+          textarea.value = taskNotes[task.id] || "";
+
+          textarea.addEventListener("input", (e) => {
+            saveNote(task.id, e.target.value);
+          });
+
+          notesSection.appendChild(notesHeader);
+          notesSection.appendChild(textarea);
+
+          item.appendChild(main);
+          item.appendChild(notesSection);
+          list.appendChild(item);
+        });
+
+        card.appendChild(list);
+        container.appendChild(card);
+      });
+
+      if (visibleCategories === 0) {
+        const noResults = document.createElement("div");
+        noResults.className = "no-results";
+        noResults.textContent = `Nenhum tópico encontrado para "${currentSearchTerm}". Tente buscar por termos como MVC, Clean Architecture, DDD, Event-Driven ou SASS.`;
+        container.appendChild(noResults);
+      }
+
+      updateProgress();
+    }
+
+    function toggleTask(id, isChecked) {
+      if (isChecked) {
+        completedTasks[id] = true;
+      } else {
+        delete completedTasks[id];
+      }
+      localStorage.setItem(STORAGE_KEY_CHECKED, JSON.stringify(completedTasks));
+      
+      const chk = document.getElementById(`chk_${id}`);
+      const itemEl = chk?.closest(".task-item");
+      if (itemEl) {
+        itemEl.classList.toggle("checked", isChecked);
+      }
+
+      updateProgress();
+    }
+
+    function saveNote(id, text) {
+      const statusEl = document.getElementById(`status_${id}`);
+      
+      clearTimeout(debounceTimers[id]);
+      debounceTimers[id] = setTimeout(() => {
+        taskNotes[id] = text;
+        localStorage.setItem(STORAGE_KEY_NOTES, JSON.stringify(taskNotes));
+        
+        if (statusEl) {
+          statusEl.classList.add("visible");
+          setTimeout(() => statusEl.classList.remove("visible"), 1800);
+        }
+      }, 500);
+    }
+
+    function updateProgress() {
+      const totalTasks = roadmapData.reduce((acc, cat) => acc + cat.tasks.length, 0);
+      const doneTasks = Object.keys(completedTasks).length;
+      const percent = totalTasks === 0 ? 0 : Math.round((doneTasks / totalTasks) * 100);
+
+      progressFill.style.width = `${percent}%`;
+      progressPercent.textContent = `${percent}% (${doneTasks}/${totalTasks} concluídos)`;
+    }
+
+    // Busca em Tempo Real
+    searchInput.addEventListener("input", (e) => {
+      currentSearchTerm = e.target.value;
+      clearSearchBtn.classList.toggle("visible", currentSearchTerm.length > 0);
+      renderRoadmap();
+    });
+
+    clearSearchBtn.addEventListener("click", () => {
+      searchInput.value = "";
+      currentSearchTerm = "";
+      clearSearchBtn.classList.remove("visible");
+      searchInput.focus();
+      renderRoadmap();
+    });
+
+    // Filtros de Categoria
+    filterButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        filterButtons.forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        currentFilter = btn.dataset.filter;
+        renderRoadmap();
+      });
+    });
+
+    // Reset Total com Confirmação
+    resetBtn.addEventListener("click", () => {
+      if (confirm("Deseja realmente apagar todo o progresso e as anotações do roadmap?")) {
+        completedTasks = {};
+        taskNotes = {};
+        localStorage.removeItem(STORAGE_KEY_CHECKED);
+        localStorage.removeItem(STORAGE_KEY_NOTES);
+        renderRoadmap();
+      }
+    });
+
+    renderRoadmap();
+  </script>
+</body>
+</html>
