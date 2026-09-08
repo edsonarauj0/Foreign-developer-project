@@ -1,0 +1,1590 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Roadmap AVP/VP & Full Stack Java Engineer - Preparação Internacional</title>
+  <style>
+    :root {
+      --bg: #0b1120;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --accent: #38bdf8;
+      --accent-hover: #0284c7;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --success: #22c55e;
+      --badge-vp-bg: rgba(245, 158, 11, 0.15);
+      --badge-vp-border: #f59e0b;
+      --badge-vp-text: #fbbf24;
+      --badge-core-bg: rgba(56, 189, 248, 0.15);
+      --badge-core-border: #38bdf8;
+      --badge-core-text: #7dd3fc;
+      --badge-soft-bg: rgba(168, 85, 247, 0.15);
+      --badge-soft-border: #a855f7;
+      --badge-soft-text: #c084fc;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      padding: 1rem 0.75rem 3rem 0.75rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 900px;
+    }
+
+    header {
+      margin-bottom: 1.25rem;
+      padding: 0 0.25rem;
+    }
+
+    h1 {
+      font-size: 1.45rem;
+      margin-bottom: 0.35rem;
+      color: var(--accent);
+      line-height: 1.25;
+    }
+
+    p.subtitle {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      line-height: 1.4;
+    }
+
+    /* Barra Superior Fixa Minimalista (Apenas progresso fino + Idiomas) */
+    .sticky-mini-bar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(11, 17, 32, 0.92);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 0.5rem 0.25rem;
+      border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+      margin-bottom: 1rem;
+    }
+
+    .mini-bar-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .lang-switcher {
+      display: flex;
+      gap: 0.2rem;
+      background: #060b14;
+      padding: 0.2rem;
+      border-radius: 6px;
+      border: 1px solid var(--card-border);
+      flex-shrink: 0;
+    }
+
+    .lang-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+
+    .lang-btn.active {
+      background: var(--accent);
+      color: #0b1120;
+    }
+
+    .progress-box {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 600;
+      font-size: 0.75rem;
+    }
+
+    .progress-bar-bg {
+      background-color: var(--card-border);
+      border-radius: 9999px;
+      height: 6px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      background: linear-gradient(90deg, var(--accent), var(--success));
+      height: 100%;
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    /* Painel de Filtros e Busca (Não Fixo, Rola junto com a tela) */
+    .controls-panel {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      margin-bottom: 1.25rem;
+      overflow: hidden;
+    }
+
+    .controls-summary {
+      padding: 0.75rem 1rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      list-style: none;
+      user-select: none;
+    }
+
+    .controls-summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .controls-summary::after {
+      content: "▾";
+      font-size: 1rem;
+      color: var(--accent);
+      transition: transform 0.2s;
+    }
+
+    details[open] .controls-summary::after {
+      transform: rotate(180deg);
+    }
+
+    .controls-body {
+      padding: 0 0.85rem 0.85rem 0.85rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      border-top: 1px solid rgba(51, 65, 85, 0.4);
+    }
+
+    .search-wrapper {
+      position: relative;
+      width: 100%;
+      margin-top: 0.75rem;
+    }
+
+    .search-input {
+      width: 100%;
+      background: #060b14;
+      border: 1px solid var(--card-border);
+      border-radius: 6px;
+      color: var(--text-main);
+      padding: 0.55rem 2.2rem 0.55rem 0.75rem;
+      font-size: 0.82rem;
+      outline: none;
+    }
+
+    .clear-search-btn {
+      position: absolute;
+      right: 0.6rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1rem;
+      display: none;
+      padding: 0.2rem;
+    }
+
+    .clear-search-btn.visible {
+      display: block;
+    }
+
+    .filter-buttons {
+      display: flex;
+      gap: 0.35rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      padding: 0.35rem 0.65rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.75rem;
+      flex-grow: 1;
+      text-align: center;
+    }
+
+    .filter-btn.active {
+      background: var(--accent);
+      color: #0f172a;
+      font-weight: 600;
+      border-color: var(--accent);
+    }
+
+    .panel-footer {
+      display: flex;
+      justify-content: flex-end;
+      padding-top: 0.3rem;
+    }
+
+    .reset-btn {
+      background: transparent;
+      border: none;
+      color: #ef4444;
+      cursor: pointer;
+      font-size: 0.75rem;
+      text-decoration: underline;
+    }
+
+    /* Cartões e Listagem */
+    .category-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .category-header {
+      margin-bottom: 0.85rem;
+    }
+
+    .category-header h2 {
+      font-size: 1.05rem;
+      color: var(--accent);
+      line-height: 1.3;
+    }
+
+    .category-timeline {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+
+    .task-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .task-item {
+      display: flex;
+      flex-direction: column;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 0.75rem;
+      border-radius: 8px;
+    }
+
+    .task-main {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+      cursor: pointer;
+    }
+
+    .task-item input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--text-muted);
+      border-radius: 4px;
+      margin-top: 2px;
+      outline: none;
+      cursor: pointer;
+      display: grid;
+      place-content: center;
+      flex-shrink: 0;
+    }
+
+    .task-item input[type="checkbox"]:checked {
+      background-color: var(--success);
+      border-color: var(--success);
+    }
+
+    .task-item input[type="checkbox"]:checked::before {
+      content: "";
+      width: 6px;
+      height: 10px;
+      border: solid #fff;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg) translate(-1px, -1px);
+    }
+
+    .task-content {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      width: 100%;
+    }
+
+    .task-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    .task-title {
+      font-size: 0.88rem;
+      font-weight: 500;
+      line-height: 1.35;
+    }
+
+    .badge {
+      font-size: 0.65rem;
+      padding: 0.15rem 0.45rem;
+      border-radius: 9999px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .badge.core {
+      background: var(--badge-core-bg);
+      border: 1px solid var(--badge-core-border);
+      color: var(--badge-core-text);
+    }
+
+    .badge.vp {
+      background: var(--badge-vp-bg);
+      border: 1px solid var(--badge-vp-border);
+      color: var(--badge-vp-text);
+    }
+
+    .badge.soft {
+      background: var(--badge-soft-bg);
+      border: 1px solid var(--badge-soft-border);
+      color: var(--badge-soft-text);
+    }
+
+    .task-desc {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+
+    .task-item.checked .task-title {
+      color: var(--text-muted);
+      text-decoration: line-through;
+    }
+
+    /* Sessão de Anotações Mobile-Friendly */
+    .notes-section {
+      margin-top: 0.5rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .notes-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    .notes-status {
+      font-size: 0.65rem;
+      color: var(--success);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .notes-status.visible {
+      opacity: 1;
+    }
+
+    .notes-textarea {
+      width: 100%;
+      min-height: 44px;
+      background: #060b14;
+      border: 1px solid var(--card-border);
+      border-radius: 6px;
+      color: var(--text-main);
+      padding: 0.45rem;
+      font-size: 0.78rem;
+      resize: vertical;
+      outline: none;
+      font-family: inherit;
+    }
+
+    .no-results {
+      text-align: center;
+      padding: 2rem 1rem;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+    }
+
+    /* Desktop adjustments */
+    @media (min-width: 640px) {
+      body {
+        padding: 2rem 1rem;
+      }
+      h1 {
+        font-size: 1.8rem;
+      }
+      p.subtitle {
+        font-size: 0.95rem;
+      }
+      .filter-btn {
+        flex-grow: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1 id="ui-title">AVP / VP & Full Stack Java Engineer Roadmap</h1>
+      <p class="subtitle" id="ui-subtitle">Preparação técnica completa para vagas internacionais corporativas (Wissen Calgary / Citigroup) com foco em patrocínio de visto.</p>
+    </header>
+
+    <!-- Barra compacta fixa de progresso e idioma -->
+    <div class="sticky-mini-bar">
+      <div class="mini-bar-content">
+        <div class="lang-switcher">
+          <button class="lang-btn active" data-lang="pt">PT</button>
+          <button class="lang-btn" data-lang="en">EN</button>
+          <button class="lang-btn" data-lang="es">ES</button>
+          <button class="lang-btn" data-lang="fr">FR</button>
+        </div>
+
+        <div class="progress-box">
+          <div class="progress-info">
+            <span id="ui-progress-label">Progresso</span>
+            <span id="progress-percent">0%</span>
+          </div>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="progress-fill"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Painel de Configurações e Filtros Retrátil (não bloqueia a tela) -->
+    <details class="controls-panel" open>
+      <summary class="controls-summary" id="ui-filter-summary">Filtros & Pesquisa</summary>
+      <div class="controls-body">
+        <div class="search-wrapper">
+          <input 
+            type="text" 
+            id="search-input" 
+            class="search-input" 
+            placeholder="Buscar (ex: MVC, Clean Architecture, Kafka)..." 
+          />
+          <button id="clear-search-btn" class="clear-search-btn">&times;</button>
+        </div>
+
+        <div class="filter-buttons">
+          <button class="filter-btn active" data-filter="all" id="btn-filter-all">Todos</button>
+          <button class="filter-btn" data-filter="core" id="btn-filter-core">Core Tech</button>
+          <button class="filter-btn" data-filter="vp" id="btn-filter-vp">AVP/VP</button>
+          <button class="filter-btn" data-filter="soft" id="btn-filter-soft">Inglês & Carreira</button>
+        </div>
+
+        <div class="panel-footer">
+          <button class="reset-btn" id="reset-btn">Limpar dados salvos</button>
+        </div>
+      </div>
+    </details>
+
+    <div id="roadmap-tree"></div>
+  </div>
+
+  <script>
+    const i18n = {
+      pt: {
+        title: "AVP / VP & Full Stack Java Engineer Roadmap",
+        subtitle: "Preparação técnica completa para vagas internacionais corporativas (Wissen Calgary / Citigroup) com foco em patrocínio de visto.",
+        progressLabel: "Progresso",
+        completedSuffix: "concluídos",
+        filterSummary: "Filtros & Pesquisa",
+        searchPlaceholder: "Buscar (ex: MVC, Clean Architecture, Kafka, React)...",
+        filterAll: "Todos",
+        filterCore: "Core Tech",
+        filterVp: "AVP/VP",
+        filterSoft: "Inglês & Carreira",
+        resetBtn: "Limpar dados salvos",
+        confirmReset: "Deseja realmente apagar todo o progresso e anotações?",
+        notesLabel: "Anotações / Recursos estudados:",
+        notesSaved: "✓ Salvo",
+        notesPlaceholder: "Anote conceitos-chave, links e soluções de código...",
+        noResults: "Nenhum tópico encontrado para",
+        badgeCore: "Core Tech",
+        badgeVp: "AVP/VP Level",
+        badgeSoft: "Soft & Career"
+      },
+      en: {
+        title: "AVP / VP & Full Stack Java Engineer Roadmap",
+        subtitle: "End-to-end technical roadmap for international enterprise roles (Wissen Calgary / Citigroup) with visa sponsorship focus.",
+        progressLabel: "Progress",
+        completedSuffix: "completed",
+        filterSummary: "Filters & Search",
+        searchPlaceholder: "Search (e.g. MVC, Clean Architecture, Kafka, React)...",
+        filterAll: "All",
+        filterCore: "Core Tech",
+        filterVp: "AVP/VP",
+        filterSoft: "English & Career",
+        resetBtn: "Clear saved data",
+        confirmReset: "Are you sure you want to delete all saved progress and notes?",
+        notesLabel: "Notes / Studied resources:",
+        notesSaved: "✓ Saved",
+        notesPlaceholder: "Document core principles, links, code solutions...",
+        noResults: "No topics found matching",
+        badgeCore: "Core Tech",
+        badgeVp: "AVP/VP Level",
+        badgeSoft: "Soft & Career"
+      },
+      es: {
+        title: "Roadmap AVP / VP & Full Stack Java Engineer",
+        subtitle: "Preparación técnica integral para puestos internacionales corporativos (Wissen Calgary / Citigroup) con patrocinio de visa.",
+        progressLabel: "Progreso",
+        completedSuffix: "completados",
+        filterSummary: "Filtros & Búsqueda",
+        searchPlaceholder: "Buscar (ej: MVC, Clean Architecture, Kafka, React)...",
+        filterAll: "Todos",
+        filterCore: "Core Tech",
+        filterVp: "AVP/VP",
+        filterSoft: "Inglés & Carrera",
+        resetBtn: "Borrar datos guardados",
+        confirmReset: "¿Realmente deseas eliminar todo el progreso y las notas guardadas?",
+        notesLabel: "Notas / Recursos estudiados:",
+        notesSaved: "✓ Guardado",
+        notesPlaceholder: "Anota conceptos clave, enlaces y soluciones...",
+        noResults: "No se encontraron temas para",
+        badgeCore: "Core Tech",
+        badgeVp: "Nivel AVP/VP",
+        badgeSoft: "Soft & Carrera"
+      },
+      fr: {
+        title: "Feuille de Route AVP / VP & Full Stack Java Engineer",
+        subtitle: "Préparation technique complète pour postes corporatifs internationaux (Wissen Calgary / Citigroup) avec parrainage de visa.",
+        progressLabel: "Progression",
+        completedSuffix: "terminés",
+        filterSummary: "Filtres & Recherche",
+        searchPlaceholder: "Rechercher (ex: MVC, Clean Architecture, Kafka, React)...",
+        filterAll: "Tous",
+        filterCore: "Core Tech",
+        filterVp: "AVP/VP",
+        filterSoft: "Anglais & Carrière",
+        resetBtn: "Effacer les données",
+        confirmReset: "Voulez-vous vraiment effacer toute la progression et les notes ?",
+        notesLabel: "Notes / Ressources étudiées :",
+        notesSaved: "✓ Enregistré",
+        notesPlaceholder: "Notez les concepts clés, liens et solutions...",
+        noResults: "Aucun résultat trouvé pour",
+        badgeCore: "Core Tech",
+        badgeVp: "Niveau AVP/VP",
+        badgeSoft: "Soft & Carrière"
+      }
+    };
+
+    const roadmapData = [
+      {
+        category: {
+          pt: "Fase 1: Low-Latency Java & JVM Internals",
+          en: "Phase 1: Low-Latency Java & JVM Internals",
+          es: "Fase 1: Low-Latency Java & JVM Internals",
+          fr: "Phase 1: Low-Latency Java & JVM Internals"
+        },
+        timeline: {
+          pt: "Semanas 1 a 3 • Foco: Baixo Nível e Performance",
+          en: "Weeks 1 to 3 • Focus: Low-Level Mastery & Performance",
+          es: "Semanas 1 a 3 • Enfoque: Bajo Nivel y Rendimiento",
+          fr: "Semaines 1 à 3 • Focus: Bas Niveau et Performance"
+        },
+        tasks: [
+          { 
+            id: "vp_concurrency", 
+            title: {
+              pt: "Advanced Concurrency (java.util.concurrent)",
+              en: "Advanced Concurrency (java.util.concurrent)",
+              es: "Concurrencia Avanzada (java.util.concurrent)",
+              fr: "Concurrence Avancée (java.util.concurrent)"
+            },
+            desc: {
+              pt: "ConcurrentHashMap, ReentrantLocks, Semaphores, CountDownLatch e resolução de Race Conditions / Deadlocks sem synchronized.",
+              en: "ConcurrentHashMap, ReentrantLocks, Semaphores, CountDownLatch and resolving Race Conditions / Deadlocks without plain synchronized blocks.",
+              es: "ConcurrentHashMap, ReentrantLocks, Semaphores, CountDownLatch y resolución de Race Conditions / Deadlocks sin synchronized simple.",
+              fr: "ConcurrentHashMap, ReentrantLocks, Semaphores, CountDownLatch et gestion des Race Conditions / Deadlocks sans simple synchronized."
+            },
+            type: "core" 
+          },
+          { 
+            id: "vp_jmm", 
+            title: {
+              pt: "Java Memory Model & Memory Visibility",
+              en: "Java Memory Model & Memory Visibility",
+              es: "Modelo de Memoria de Java & Visibilidad",
+              fr: "Java Memory Model & Visibilité Mémoire"
+            },
+            desc: {
+              pt: "Compreensão de Happens-Before guarantee, palavra-chave volatile, Atomic variables e CPU caches L1/L2/L3.",
+              en: "Understanding Happens-Before guarantee, the volatile keyword, Atomic variables, and CPU caches L1/L2/L3.",
+              es: "Comprensión de la garantía Happens-Before, palabra clave volatile, variables atómicas y cachés de CPU L1/L2/L3.",
+              fr: "Compréhension de la règle Happens-Before, mot-clé volatile, variables atomiques et caches CPU L1/L2/L3."
+            },
+            type: "vp" 
+          },
+          { 
+            id: "vp_jvm_tuning", 
+            title: {
+              pt: "JVM Internals & GC Profiling",
+              en: "JVM Internals & GC Profiling",
+              es: "Internals de la JVM & Profiling de GC",
+              fr: "Internes de la JVM & Profiling GC"
+            },
+            desc: {
+              pt: "Young/Old Gen, Metaspace, coletores G1GC e ZGC. Diagnóstico de memory leaks com Heap Dumps (VisualVM/Eclipse MAT).",
+              en: "Young/Old Gen, Metaspace, G1GC and ZGC collectors. Troubleshooting memory leaks using Heap Dumps (VisualVM/Eclipse MAT).",
+              es: "Young/Old Gen, Metaspace, recolectores G1GC y ZGC. Diagnóstico de memory leaks mediante Heap Dumps (VisualVM/Eclipse MAT).",
+              fr: "Young/Old Gen, Metaspace, ramasse-miettes G1GC et ZGC. Diagnostic de fuites mémoire avec Heap Dumps (VisualVM/Eclipse MAT)."
+            },
+            type: "core" 
+          },
+          { 
+            id: "vp_virtual_threads", 
+            title: {
+              pt: "Java 21 Virtual Threads & Structured Concurrency",
+              en: "Java 21 Virtual Threads & Structured Concurrency",
+              es: "Java 21 Virtual Threads & Structured Concurrency",
+              fr: "Java 21 Virtual Threads & Concurrence Structurée"
+            },
+            desc: {
+              pt: "Uso do Project Loom para altíssima escala de I/O bloqueante em sistemas financeiros transacionais.",
+              en: "Using Project Loom for massive I/O scale in transactional financial systems.",
+              es: "Uso de Project Loom para alta escala de I/O bloqueante en sistemas financieros transaccionales.",
+              fr: "Utilisation de Project Loom pour un passage à l'échelle massif d'I/O bloquant dans les systèmes financiers."
+            },
+            type: "vp" 
+          },
+          { 
+            id: "vp_spring_tx", 
+            title: {
+              pt: "Spring Boot Deep Dive & Transaction Boundaries",
+              en: "Spring Boot Deep Dive & Transaction Boundaries",
+              es: "Spring Boot a Fondo & Límites Transaccionales",
+              fr: "Spring Boot en Profondeur & Périmètres Transactionnels"
+            },
+            desc: {
+              pt: "Ciclo de vida do ApplicationContext, proxies dinâmicos, propagação transacional e controle de isolation levels no Hibernate/JPA.",
+              en: "ApplicationContext lifecycle, dynamic proxies, transaction propagation, and isolation level control in Hibernate/JPA.",
+              es: "Ciclo de vida de ApplicationContext, proxies dinámicos, propagación transaccional y niveles de aislamiento en Hibernate/JPA.",
+              fr: "Cycle de vie d'ApplicationContext, proxies dynamiques, propagation des transactions et isolation avec Hibernate/JPA."
+            },
+            type: "core" 
+          }
+        ]
+      },
+      {
+        category: {
+          pt: "Fase 2: Arquitetura de Software: Padrões de Aplicação e Código",
+          en: "Phase 2: Software Architecture: Application & Code Patterns",
+          es: "Fase 2: Arquitectura de Software: Patrones de Aplicación y Código",
+          fr: "Phase 2: Architecture Logicielle: Motifs d'Application et de Code"
+        },
+        timeline: {
+          pt: "Semana 4 • Foco: Clean Architecture, DDD, MVC e Acoplamento",
+          en: "Week 4 • Focus: Clean Architecture, DDD, MVC, and Decoupling",
+          es: "Semana 4 • Enfoque: Clean Architecture, DDD, MVC y Desacoplamiento",
+          fr: "Semaine 4 • Focus: Clean Architecture, DDD, MVC et Découplage"
+        },
+        tasks: [
+          { 
+            id: "arch_mvc_layered", 
+            title: {
+              pt: "MVC & Layered Architecture (Camadas Tradicionais)",
+              en: "MVC & Layered Architecture (Traditional Layers)",
+              es: "MVC & Arquitectura en Capas (Tradicional)",
+              fr: "MVC & Architecture en Couches (Traditionnelle)"
+            },
+            desc: {
+              pt: "Separação estrita de Model, View e Controller; padrões Controller-Service-Repository e fluxo de DTOs para evitar vazamento de entidades.",
+              en: "Strict separation of Model, View, and Controller; Controller-Service-Repository patterns and DTO flow preventing entity leaks.",
+              es: "Separación estricta de Modelo, Vista y Controlador; patrones Controller-Service-Repository y flujo de DTOs para evitar filtraciones de entidades.",
+              fr: "Séparation stricte Modèle-Vue-Contrôleur; motifs Controller-Service-Repository et flux de DTO évitant la fuite d'entités."
+            },
+            type: "core" 
+          },
+          { 
+            id: "arch_clean_hexagonal", 
+            title: {
+              pt: "Clean Architecture & Hexagonal (Ports and Adapters)",
+              en: "Clean Architecture & Hexagonal (Ports and Adapters)",
+              es: "Clean Architecture & Hexagonal (Ports and Adapters)",
+              fr: "Clean Architecture & Hexagonale (Ports et Adaptateurs)"
+            },
+            desc: {
+              pt: "Isolamento absoluto do domínio de negócio contra frameworks, bancos e bibliotecas externas. Inversão de dependência em escala.",
+              en: "Pure isolation of business domain logic from external frameworks, databases, and libraries. Dependency inversion at scale.",
+              es: "Aislamiento total del dominio de negocio frente a frameworks, bases de datos y librerías externas. Inversión de dependencias a gran escala.",
+              fr: "Isolation stricte du domaine métier contre les frameworks, bases de données et bibliothèques externes. Inversion de dépendances à l'échelle."
+            },
+            type: "vp" 
+          },
+          { 
+            id: "arch_ddd", 
+            title: {
+              pt: "Domain-Driven Design (DDD Estratégico e Tático)",
+              en: "Domain-Driven Design (Strategic and Tactical DDD)",
+              es: "Domain-Driven Design (DDD Estratégico y Táctico)",
+              fr: "Domain-Driven Design (DDD Stratégique et Tactique)"
+            },
+            desc: {
+              pt: "Mapeamento de Bounded Contexts, Aggregates, Value Objects, Domain Services e Domain Events na modelagem financeira corporativa.",
+              en: "Mapping Bounded Contexts, Aggregates, Value Objects, Domain Services, and Domain Events in enterprise financial modeling.",
+              es: "Modelado de Bounded Contexts, Aggregates, Value Objects, Domain Services y Domain Events en finanzas corporativas.",
+              fr: "Modélisation des Bounded Contexts, Aggregates, Value Objects, Domain Services et Domain Events en ingénierie financière."
+            },
+            type: "vp" 
+          },
+          { 
+            id: "arch_modular_monolith", 
+            title: {
+              pt: "Modular Monolith vs. Microsserviços",
+              en: "Modular Monolith vs. Microservices",
+              es: "Monolito Modular vs. Microservicios",
+              fr: "Monolithe Modulaire vs Microservices"
+            },
+            desc: {
+              pt: "Trade-offs de latência, governança de código, limites de módulos independentes e estratégias de decomposição de monólitos legados.",
+              en: "Latency trade-offs, code governance, strict module boundaries, and legacy monolith decomposition strategies.",
+              es: "Compromisos de latencia, gobernanza de código, límites modulares estrictos y estrategias de migración de monolitos heredados.",
+              fr: "Compromis de latence, gouvernance du code, délimitation des modules et décomposition progressive de monolithes hérités."
+            },
+            type: "vp" 
+          }
+        ]
+      },
+      {
+        category: {
+          pt: "Fase 3: Frontend Core: HTML5, CSS3, SASS & Web Architecture",
+          en: "Phase 3: Frontend Core: HTML5, CSS3, SASS & Web Architecture",
+          es: "Fase 3: Frontend Core: HTML5, CSS3, SASS & Arquitectura Web",
+          fr: "Phase 3: Frontend Core: HTML5, CSS3, SASS & Architecture Web"
+        },
+        timeline: {
+          pt: "Semana 5 • Foco: Layout Moderno, Acessibilidade e Arquitetura CSS",
+          en: "Week 5 • Focus: Modern Layout, Accessibility, and CSS Architecture",
+          es: "Semana 5 • Enfoque: Diseño Moderno, Accesibilidad y Arquitectura CSS",
+          fr: "Semaine 5 • Focus: Mise en Page Moderne, Accessibilité et Architecture CSS"
+        },
+        tasks: [
+          { 
+            id: "fe_html5_semantic", 
+            title: {
+              pt: "HTML5 Semântico & Acessibilidade (WCAG / WAI-ARIA)",
+              en: "Semantic HTML5 & Accessibility (WCAG / WAI-ARIA)",
+              es: "HTML5 Semántico & Accesibilidad (WCAG / WAI-ARIA)",
+              fr: "HTML5 Sémantique & Accessibilité (WCAG / WAI-ARIA)"
+            },
+            desc: {
+              pt: "Estruturação semântica limpa, SEO técnico, atributos ARIA (aria-live, roles) e conformidade de acessibilidade para formulários financeiros.",
+              en: "Clean semantic markup, technical SEO, ARIA attributes (aria-live, roles), and accessibility compliance for complex financial forms.",
+              es: "Marcado semántico limpio, SEO técnico, atributos ARIA (aria-live, roles) y cumplimiento de accesibilidad para formularios bancarios.",
+              fr: "Structure sémantique propre, SEO technique, attributs ARIA (aria-live, roles) et accessibilité pour formulaires financiers critiques."
+            },
+            type: "core" 
+          },
+          { 
+            id: "fe_css_layout", 
+            title: {
+              pt: "CSS3 Avançado: Flexbox, CSS Grid & Responsive Design",
+              en: "Advanced CSS3: Flexbox, CSS Grid & Responsive Design",
+              es: "CSS3 Avanzado: Flexbox, CSS Grid & Responsive Design",
+              fr: "CSS3 Avancé: Flexbox, CSS Grid & Design Adaptatif"
+            },
+            desc: {
+              pt: "Criação de dashboards complexos, mobile-first design, Container Queries, CSS Variables (Custom Properties) e cálculo de especificidade/Cascade.",
+              en: "Building complex dashboards, mobile-first layouts, Container Queries, CSS Custom Properties, and mastering specificity & cascade.",
+              es: "Creación de paneles complejos, diseño mobile-first, Container Queries, variables CSS nativas y especificidad del Cascade.",
+              fr: "Conception de tableaux de bord complexes, mobile-first, Container Queries, variables CSS personnalisées et calcul de spécificité."
+            },
+            type: "core" 
+          },
+          { 
+            id: "fe_sass_architecture", 
+            title: {
+              pt: "SASS / SCSS & Metodologias de Estilo",
+              en: "SASS / SCSS & Styling Methodologies",
+              es: "SASS / SCSS & Metodologías de Estilo",
+              fr: "SASS / SCSS & Méthodologies de Style"
+            },
+            desc: {
+              pt: "Uso avançado de Mixins, Functions, Loops (@for, @each), nesting balanceado, estrutura 7-1 pattern e convenções BEM (Block Element Modifier).",
+              en: "Mixins, Functions, Loops (@for, @each), controlled nesting, 7-1 folder structure, and BEM methodology for corporate apps.",
+              es: "Mixins avanzados, funciones, bucles (@for, @each), anidamiento balanceado, patrón 7-1 y metodología BEM.",
+              fr: "Mixins, fonctions, boucles (@for, @each), imbrication maîtrisée, architecture de dossiers 7-1 et méthodologie BEM."
+            },
+            type: "core" 
+          },
+          { 
+            id: "fe_css_in_js_modules", 
+            title: {
+              pt: "CSS Modules, Tailwind CSS & Scoped Styles",
+              en: "CSS Modules, Tailwind CSS & Scoped Styles",
+              es: "CSS Modules, Tailwind CSS & Scoped Styles",
+              fr: "CSS Modules, Tailwind CSS & Styles Isolés"
+            },
+            desc: {
+              pt: "Estratégias de isolamento de estilo em escala corporativa (evitando colisões globais), CSS Modules no bundling e integração com design systems.",
+              en: "Enterprise-grade scoped styling strategies to prevent global namespace collisions, CSS Modules bundling, and Design System tokens.",
+              es: "Estrategias de encapsulamiento de estilos a escala empresarial (evitando colisiones globales), CSS Modules y tokens de sistemas de diseño.",
+              fr: "Stratégies d'encapsulation de styles en entreprise pour éviter les collisions globales, CSS Modules et tokens de design systems."
+            },
+            type: "core" 
+          }
+        ]
+      },
+      {
+        category: {
+          pt: "Fase 4: Modern UI: React, TypeScript & State Management",
+          en: "Phase 4: Modern UI: React, TypeScript & State Management",
+          es: "Fase 4: UI Moderna: React, TypeScript & State Management",
+          fr: "Phase 4: Interface Moderne: React, TypeScript & Gestion d'État"
+        },
+        timeline: {
+          pt: "Semana 6 • Foco: Full Stack Proficiency (Citigroup Requisite)",
+          en: "Week 6 • Focus: Full Stack Proficiency (Citigroup Requisite)",
+          es: "Semana 6 • Enfoque: Dominio Full Stack (Requisito Citigroup)",
+          fr: "Semaine 6 • Focus: Maîtrise Full Stack (Prérequis Citigroup)"
+        },
+        tasks: [
+          { 
+            id: "fs_react_ts", 
+            title: {
+              pt: "React Moderno & TypeScript",
+              en: "Modern React & TypeScript",
+              es: "React Moderno & TypeScript",
+              fr: "React Moderne & TypeScript"
+            },
+            desc: {
+              pt: "Componentes funcionais com TypeScript estrito, Hooks avançados, virtualização de listas e otimização de re-renders com Profiler.",
+              en: "Strict TypeScript functional components, advanced Hooks, windowing/virtualized lists, and re-render profiling.",
+              es: "Componentes funcionales con TypeScript estricto, Hooks avanzados, virtualización de listas y profiling de renderizado.",
+              fr: "Composants fonctionnels en TypeScript strict, Hooks avancés, virtualisation de listes et optimisation des rendus avec le Profiler."
+            },
+            type: "core" 
+          },
+          { 
+            id: "fs_state_mgmt", 
+            title: {
+              pt: "State Management & Data Fetching",
+              en: "State Management & Data Fetching",
+              es: "Gestión de Estado & Data Fetching",
+              fr: "Gestion d'État & Récupération de Données"
+            },
+            desc: {
+              pt: "Gerenciamento de estado complexo com Zustand ou Redux Toolkit; caching e sincronização assíncrona de dados via React Query.",
+              en: "Complex client-state using Zustand or Redux Toolkit; server-state caching and synchronization with TanStack / React Query.",
+              es: "Gestión de estado compleja con Zustand o Redux Toolkit; sincronización y caché de datos con React Query.",
+              fr: "Gestion d'état complexe avec Zustand ou Redux Toolkit; mise en cache et synchronisation asynchrone avec React Query."
+            },
+            type: "core" 
+          },
+          { 
+            id: "fs_graphql", 
+            title: {
+              pt: "GraphQL APIs (Java + React Integration)",
+              en: "GraphQL APIs (Java + React Integration)",
+              es: "APIs GraphQL (Integración Java + React)",
+              fr: "APIs GraphQL (Intégration Java + React)"
+            },
+            desc: {
+              pt: "Design de Schemas, queries, mutations, subscriptions e resolução de performance com Dataloaders (mitigação do problema N+1).",
+              en: "Schema design, queries, mutations, subscriptions, and preventing N+1 queries using batch Dataloaders.",
+              es: "Diseño de Schemas, queries, mutaciones, suscripciones y mitigación del problema N+1 mediante Dataloaders.",
+              fr: "Conception de schémas, requêtes, mutations, abonnements et prévention du problème N+1 via des Dataloaders."
+            },
+            type: "vp" 
+          },
+          { 
+            id: "fs_frontend_sec", 
+            title: {
+              pt: "Frontend Banking Security (OWASP)",
+              en: "Frontend Banking Security (OWASP)",
+              es: "Seguridad Frontend para Banca (OWASP)",
+              fr: "Sécurité Frontend Bancaire (OWASP)"
+            },
+            desc: {
+              pt: "Mitigação de vulnerabilidades XSS, CSRF tokens, Content Security Policy (CSP) e armazenamento seguro de tokens JWT no browser.",
+              en: "Mitigating XSS vulnerabilities, CSRF tokens, strict Content Security Policy (CSP), and secure token handling in modern browsers.",
+              es: "Mitigación de XSS, tokens CSRF, Content Security Policy (CSP) y almacenamiento seguro de tokens JWT en el navegador.",
+              fr: "Mitigation des vulnérabilités XSS, protection CSRF, Content Security Policy (CSP) et manipulation sécurisée des jetons JWT."
+            },
+            type: "core" 
+          }
+        ]
+      },
+      {
+        category: {
+          pt: "Fase 5: Enterprise Databases: Oracle RDBMS & NoSQL",
+          en: "Phase 5: Enterprise Databases: Oracle RDBMS & NoSQL",
+          es: "Fase 5: Bases de Datos Corporativas: Oracle RDBMS & NoSQL",
+          fr: "Phase 5: Bases de Données d'Entreprise: Oracle RDBMS & NoSQL"
+        },
+        timeline: {
+          pt: "Semanas 7 e 8 • Foco: PL/SQL, Caching e Otimização de Queries",
+          en: "Weeks 7 and 8 • Focus: PL/SQL, Caching, and Query Optimization",
+          es: "Semanas 7 y 8 • Enfoque: PL/SQL, Caché y Optimización de Consultas",
+          fr: "Semaines 7 et 8 • Focus: PL/SQL, Cache et Optimisation de Requêtes"
+        },
+        tasks: [
+          { 
+            id: "db_oracle_plsql", 
+            title: {
+              pt: "Oracle SQL & PL/SQL Corporativo",
+              en: "Enterprise Oracle SQL & PL/SQL",
+              es: "Oracle SQL & PL/SQL Corporativo",
+              fr: "Oracle SQL & PL/SQL Corporatif"
+            },
+            desc: {
+              pt: "Desenvolvimento e manutenção de Stored Procedures, Packages, Triggers, Functions e Cursores otimizados.",
+              en: "Developing and tuning enterprise Stored Procedures, Packages, Triggers, Functions, and bulk cursor execution.",
+              es: "Desarrollo y optimización de Stored Procedures, Packages, Triggers, Functions y cursores por lotes.",
+              fr: "Développement et maintenance de Stored Procedures, Packages, Triggers, Functions et curseurs optimisés."
+            },
+            type: "core" 
+          },
+          { 
+            id: "db_tuning_execution", 
+            title: {
+              pt: "Query Optimization & Execution Plans",
+              en: "Query Optimization & Execution Plans",
+              es: "Optimización de Consultas & Execution Plans",
+              fr: "Optimisation de Requêtes & Plans d'Exécution"
+            },
+            desc: {
+              pt: "Análise profunda de EXPLAIN PLAN, criação de índices B-Tree/Bitmap, hints de otimização e particionamento por Range/Hash.",
+              en: "In-depth EXPLAIN PLAN evaluation, composite B-Tree/Bitmap indexes, cost-based optimizer hints, and Range/Hash partitioning.",
+              es: "Evaluación detallada de EXPLAIN PLAN, índices B-Tree/Bitmap compuestos, hints de optimizador y particionamiento Range/Hash.",
+              fr: "Analyse approfondie de plans d'exécution (EXPLAIN PLAN), index B-Tree/Bitmap, hints d'optimisation et partitionnement Range/Hash."
+            },
+            type: "core" 
+          },
+          { 
+            id: "db_redis_caching", 
+            title: {
+              pt: "Distributed Caching (Redis) & NoSQL",
+              en: "Distributed Caching (Redis) & NoSQL",
+              es: "Caché Distribuido (Redis) & NoSQL",
+              fr: "Cache Distribué (Redis) & NoSQL"
+            },
+            desc: {
+              pt: "Padrões Cache-Aside, Write-Through, prevenção de Cache Stampede e modelagem de documentos flexíveis com NoSQL (MongoDB).",
+              en: "Cache-Aside, Write-Through patterns, Cache Stampede prevention with distributed locks, and flexible document modeling with MongoDB.",
+              es: "Patrones Cache-Aside, Write-Through, prevención de Cache Stampede con locks distribuidos y modelado NoSQL (MongoDB).",
+              fr: "Patrons Cache-Aside, Write-Through, prévention du Cache Stampede avec verrous distribués et modélisation NoSQL (MongoDB)."
+            },
+            type: "core" 
+          },
+          { 
+            id: "db_audit_ledger", 
+            title: {
+              pt: "Double-Entry Bookkeeping & Imutabilidade",
+              en: "Double-Entry Bookkeeping & Immutability",
+              es: "Partida Doble Contable & Inmutabilidad",
+              fr: "Comptabilité en Partie Double & Immuabilité"
+            },
+            desc: {
+              pt: "Arquitetura de conciliação contábil por partidas dobradas, idempotência estrita de pagamentos e trilha de auditoria regulatória.",
+              en: "Double-entry financial ledger architecture, strict payment idempotency, and regulatory compliance immutable audit logs.",
+              es: "Arquitectura de conciliación contable por partida doble, estricta idempotencia de pagos y pistas de auditoría regulatorias.",
+              fr: "Architecture de grand livre comptable en partie double, stricte idempotence des paiements et traçabilité d'audit réglementaire."
+            },
+            type: "vp" 
+          }
+        ]
+      },
+      {
+        category: {
+          pt: "Fase 6: FinTech System Design & Event-Driven Architecture",
+          en: "Phase 6: FinTech System Design & Event-Driven Architecture",
+          es: "Fase 6: Diseño de Sistemas FinTech & Arquitectura Dirigida por Eventos",
+          fr: "Phase 6: Architecture Système FinTech & Systèmes Événementiels"
+        },
+        timeline: {
+          pt: "Semanas 9 e 10 • Foco: Sistemas Distribuídos e Bancos Tier-1",
+          en: "Weeks 9 and 10 • Focus: Distributed Systems & Tier-1 Investment Banks",
+          es: "Semanas 9 y 10 • Enfoque: Sistemas Distribuidos y Bancos Tier-1",
+          fr: "Semaines 9 et 10 • Focus: Systèmes Distribués et Banques Tier-1"
+        },
+        tasks: [
+          { 
+            id: "vp_event_driven", 
+            title: {
+              pt: "Event-Driven & Low-Latency Messaging (Kafka)",
+              en: "Event-Driven & Low-Latency Messaging (Kafka)",
+              es: "Mensajería Asíncrona & Baja Latencia (Kafka)",
+              fr: "Systèmes Événementiels & Faible Latence (Kafka)"
+            },
+            desc: {
+              pt: "Particionamento, balanceamento de offsets, semântica Exactly-Once e ordenação estrita em streams financeiros.",
+              en: "Partitioning, consumer group offset management, Exactly-Once semantics, and strict message ordering in financial streams.",
+              es: "Particionamiento, gestión de offsets, semántica Exactly-Once y ordenamiento estricto en flujos de datos financieros.",
+              fr: "Partitionnement, gestion des offsets, sémantique Exactly-Once et garantie d'ordonnancement dans les flux financiers."
+            },
+            type: "core" 
+          },
+          { 
+            id: "vp_cqrs_eventsourcing", 
+            title: {
+              pt: "CQRS & Event Sourcing Patterns",
+              en: "CQRS & Event Sourcing Patterns",
+              es: "Patrones CQRS & Event Sourcing",
+              fr: "Patrons CQRS & Event Sourcing"
+            },
+            desc: {
+              pt: "Separação de canais de escrita e leitura de alto desempenho; geração de read models especializados e trilhas imutáveis de transações.",
+              en: "Decoupling read and write pipelines for high throughput; building materialized read views and append-only event logs.",
+              es: "Desacoplamiento de flujos de lectura y escritura; generación de vistas materializadas y registros inmutables de eventos.",
+              fr: "Séparation des flux d'écriture et de lecture pour un débit maximal; création de vues matérialisées et stockage immuable d'événements."
+            },
+            type: "vp" 
+          },
+          { 
+            id: "vp_saga_outbox", 
+            title: {
+              pt: "Distributed Consistency: Saga & Outbox Patterns",
+              en: "Distributed Consistency: Saga & Outbox Patterns",
+              es: "Consistencia Distribuida: Saga & Outbox Patterns",
+              fr: "Cohérence Distribuée: Motifs Saga & Outbox"
+            },
+            desc: {
+              pt: "Coordenação de transações entre microsserviços via Saga (orquestrada/coreografada) e Transactional Outbox sem bloqueios 2PC.",
+              en: "Cross-service transaction coordination using Orchestrated/Choreographed Sagas and Transactional Outbox without blocking 2PC locks.",
+              es: "Coordinación transaccional entre microservicios mediante Sagas y Transactional Outbox sin recurrir a bloqueos de 2PC.",
+              fr: "Coordination de transactions distribuées avec les Sagas et le Transactional Outbox, sans verrouillage 2PC bloquant."
+            },
+            type: "vp" 
+          },
+          { 
+            id: "vp_resilience", 
+            title: {
+              pt: "Resilience Engineering (Resilience4j)",
+              en: "Resilience Engineering (Resilience4j)",
+              es: "Ingeniería de Resiliencia (Resilience4j)",
+              fr: "Ingénierie de la Résilience (Resilience4j)"
+            },
+            desc: {
+              pt: "Circuit Breakers, Bulkheads, Rate Limiting distribuído e estratégias de fallback para conter falhas em cascata.",
+              en: "Circuit Breakers, Bulkheads, distributed Rate Limiting, and fallback decorators preventing cascading cluster outages.",
+              es: "Circuit Breakers, Bulkheads, Rate Limiting distribuido y fallbacks para mitigar caídas en cascada.",
+              fr: "Disjoncteurs (Circuit Breakers), Bulkheads, limitation de débit distribuée et gestion des pannes en cascade."
+            },
+            type: "core" 
+          },
+          { 
+            id: "vp_sys_design_mock", 
+            title: {
+              pt: "Mock Interview: System Design Whiteboarding",
+              en: "Mock Interview: System Design Whiteboarding",
+              es: "Mock Interview: System Design Whiteboarding",
+              fr: "Simulation d'Entretien: System Design sur Tableau Blanc"
+            },
+            desc: {
+              pt: "Simulação de 45 min para desenhar sistemas de larga escala (ex: Real-time Payment Gateway, Stock Ticker Ingestion).",
+              en: "45-minute whiteboarding practice designing large scale architectures (e.g., Real-time Payment Gateway, Stock Ticker Ingestion).",
+              es: "Simulación técnica de 45 min para diseñar sistemas a gran escala (ej: Pasarela de Pagos en Tiempo Real, Ingesta Bursátil).",
+              fr: "Pratique de 45 minutes pour concevoir des architectures à grande échelle (ex: passerelle de paiement temps réel, cotations boursières)."
+            },
+            type: "vp" 
+          }
+        ]
+      },
+      {
+        category: {
+          pt: "Fase 7: DevOps, Cloud (AWS/OpenShift) & AI Workflows",
+          en: "Phase 7: DevOps, Cloud (AWS/OpenShift) & AI Workflows",
+          es: "Fase 7: DevOps, Cloud (AWS/OpenShift) & Flujos de IA",
+          fr: "Phase 7: DevOps, Cloud (AWS/OpenShift) & Outils d'IA"
+        },
+        timeline: {
+          pt: "Semana 11 • Foco: Infraestrutura Corporativa e Ferramental Moderno",
+          en: "Week 11 • Focus: Enterprise Infrastructure and Modern Tooling",
+          es: "Semana 11 • Enfoque: Infraestructura Corporativa y Herramientas Modernas",
+          fr: "Semaine 11 • Focus: Infrastructure d'Entreprise et Outillage Moderne"
+        },
+        tasks: [
+          { 
+            id: "devops_build_tools", 
+            title: {
+              pt: "Build Automation & Quality: Maven / Gradle",
+              en: "Build Automation & Quality: Maven / Gradle",
+              es: "Automatización de Builds & Calidad: Maven / Gradle",
+              fr: "Automatisation de Build & Qualité: Maven / Gradle"
+            },
+            desc: {
+              pt: "Configuração avançada de multi-module builds, gerenciamento de plugins, profile injection e integração com SonarQube.",
+              en: "Multi-module project configuration, dependency convergence, profile management, and SonarQube code quality gates.",
+              es: "Configuración avanzada de proyectos multimodulares, plugins personalizados y control de calidad con SonarQube.",
+              fr: "Configuration de projets multimodules, gestion des dépendances, profils de compilation et intégration SonarQube."
+            },
+            type: "core" 
+          },
+          { 
+            id: "devops_openshift_k8s", 
+            title: {
+              pt: "OpenShift & Kubernetes Container Orchestration",
+              en: "OpenShift & Kubernetes Container Orchestration",
+              es: "Orquestación con OpenShift & Kubernetes",
+              fr: "Orchestration avec OpenShift & Kubernetes"
+            },
+            desc: {
+              pt: "Deploy corporativo em Red Hat OpenShift, gerenciamento de Pods, Deployments, Services, Routes, ConfigMaps e Secrets.",
+              en: "Enterprise deployment on Red Hat OpenShift, managing Pods, Deployments, Services, Routes, ConfigMaps, and encrypted Secrets.",
+              es: "Despliegue corporativo en Red Hat OpenShift, administración de Pods, Deployments, Services, Routes, ConfigMaps y Secrets.",
+              fr: "Déploiement corporatif sur Red Hat OpenShift, gestion des Pods, Deployments, Services, Routes, ConfigMaps et Secrets."
+            },
+            type: "core" 
+          },
+          { 
+            id: "devops_aws_cloud", 
+            title: {
+              pt: "AWS Cloud Native Services",
+              en: "AWS Cloud Native Services",
+              es: "Servicios Cloud Nativos en AWS",
+              fr: "Services Cloud Natifs AWS"
+            },
+            desc: {
+              pt: "Arquitetura e deploy utilizando ECS/EKS, RDS Aurora, S3, IAM roles de segurança e monitoramento com CloudWatch.",
+              en: "Architecture and operations leveraging ECS/EKS, RDS Aurora, S3, fine-grained IAM roles, and CloudWatch metrics/alarms.",
+              es: "Arquitectura y despliegues con ECS/EKS, RDS Aurora, S3, políticas de seguridad IAM y monitoreo en CloudWatch.",
+              fr: "Architecture et déploiement avec ECS/EKS, RDS Aurora, S3, gestion des accès IAM et monitoring avec CloudWatch."
+            },
+            type: "core" 
+          },
+          { 
+            id: "devops_cicd_jenkins", 
+            title: {
+              pt: "CI/CD Pipelines (Jenkins / Docker)",
+              en: "CI/CD Pipelines (Jenkins / Docker)",
+              es: "Pipelines de CI/CD (Jenkins / Docker)",
+              fr: "Pipelines CI/CD (Jenkins / Docker)"
+            },
+            desc: {
+              pt: "Construção de pipelines declarativas no Jenkins, Docker multi-stage builds seguros e automação de testes integrados.",
+              en: "Building declarative scripted Jenkins pipelines, hardened multi-stage Docker builds, and automated smoke/integration tests.",
+              es: "Creación de pipelines declarativas en Jenkins, Dockerfiles multi-stage seguros y ejecución automatizada de tests.",
+              fr: "Création de pipelines déclaratifs Jenkins, builds Docker multi-étapes sécurisés et automatisation des tests intégrés."
+            },
+            type: "core" 
+          },
+          { 
+            id: "devops_ai_workflows", 
+            title: {
+              pt: "AI Tools for Enhanced Dev Workflows",
+              en: "AI Tools for Enhanced Dev Workflows",
+              es: "Herramientas de IA para Flujos de Desarrollo",
+              fr: "Outils d'IA pour Accélérer le Développement"
+            },
+            desc: {
+              pt: "Uso prático de Copilot/LLMs para geração rápida de suites de testes (JUnit/Mockito), refatoração de código legado e documentação.",
+              en: "Leveraging LLMs and GitHub Copilot for fast test scaffolding (JUnit/Mockito), refactoring legacy methods, and API documentation.",
+              es: "Uso práctico de LLMs y Copilot para generación rápida de pruebas (JUnit/Mockito), refactorización de código legado y documentación.",
+              fr: "Utilisation de LLM et Copilot pour l'échafaudage de tests (JUnit/Mockito), le refactoring de code hérité et la documentation."
+            },
+            type: "vp" 
+          }
+        ]
+      },
+      {
+        category: {
+          pt: "Fase 8: Live Coding, Inglês Técnico & Carreira Internacional",
+          en: "Phase 8: Live Coding, Technical English & International Career",
+          es: "Fase 8: Live Coding, Inglés Técnico & Carrera Internacional",
+          fr: "Phase 8: Live Coding, Anglais Technique & Carrière Internationale"
+        },
+        timeline: {
+          pt: "Semana 12 • Foco: Raciocínio sob Pressão, STAR Method e Visto Canadá",
+          en: "Week 12 • Focus: Reasoning Under Pressure, STAR Method & Canada Visa",
+          es: "Semana 12 • Enfoque: Razonamiento Bajo Presión, Método STAR y Visa Canadá",
+          fr: "Semaine 12 • Focus: Réflexion sous Pression, Méthode STAR et Visa Canada"
+        },
+        tasks: [
+          { 
+            id: "vp_dsa_patterns", 
+            title: {
+              pt: "Algoritmos LeetCode Medium (Java)",
+              en: "LeetCode Medium Algorithms (Java)",
+              es: "Algoritmos LeetCode Medium (Java)",
+              fr: "Algorithmes LeetCode Medium (Java)"
+            },
+            desc: {
+              pt: "Padrões prioritários: Two Pointers, Sliding Window, BFS/DFS em Grafos e manipulação eficiente de Strings/HashMaps.",
+              en: "Core patterns: Two Pointers, Sliding Window, Graph BFS/DFS, and high-efficiency String/HashMap processing.",
+              es: "Patrones clave: Two Pointers, Sliding Window, grafos con BFS/DFS y manipulación eficiente de Strings y HashMaps.",
+              fr: "Motifs essentiels: Two Pointers, Sliding Window, parcours de graphes BFS/DFS et structures HashMaps optimisées."
+            },
+            type: "core" 
+          },
+          { 
+            id: "vp_talk_out_loud", 
+            title: {
+              pt: "Técnica Talk-Out-Loud em Inglês",
+              en: "Talk-Out-Loud Technical Communication",
+              es: "Técnica Talk-Out-Loud en Inglés",
+              fr: "Communication Technique 'Talk-Out-Loud'"
+            },
+            desc: {
+              pt: "Prática diária de verbalizar raciocínio técnico, edge cases e cálculo de complexidade Big-O antes de codar.",
+              en: "Daily drills verbalizing technical trade-offs, edge cases, and Big-O computational bounds while typing live solutions.",
+              es: "Práctica continua para verbalizar decisiones técnicas, casos límite y complejidad Big-O en vivo.",
+              fr: "Entraînement quotidien à verbaliser les choix techniques, cas limites et complexité Big-O en direct."
+            },
+            type: "soft" 
+          },
+          { 
+            id: "vp_star_leadership", 
+            title: {
+              pt: "Respostas Comportamentais (Método STAR)",
+              en: "Behavioral Leadership Stories (STAR Method)",
+              es: "Entrevistas de Comportamiento (Método STAR)",
+              fr: "Entretiens Comportementaux (Méthode STAR)"
+            },
+            desc: {
+              pt: "Estruturar 6 a 8 histórias em inglês sobre liderança técnica, mediação de conflitos de arquitetura e mitigação de incidentes críticos.",
+              en: "Structuring 6 to 8 STAR stories (Situation, Task, Action, Result) highlighting technical mediation and major outage post-mortems.",
+              es: "Estructuración de 6 a 8 respuestas con el método STAR demostrando liderazgo técnico y manejo de incidentes en producción.",
+              fr: "Préparation de 6 à 8 récits STAR démontrant leadership technique, médiation d'architecture et gestion d'incidents critiques."
+            },
+            type: "soft" 
+          },
+          { 
+            id: "vp_canadian_resume", 
+            title: {
+              pt: "Canadian Resume Format (ATS Tailored)",
+              en: "Canadian Resume Format (ATS Tailored)",
+              es: "Formato de Currículum Canadiense (Adaptado a ATS)",
+              fr: "CV au Format Canadien (Optimisé ATS)"
+            },
+            desc: {
+              pt: "Remover dados pessoais irrelevantes. Descrever impactos com métricas quantificáveis (ex: TPS, latência reduzida, economia de cloud).",
+              en: "Stripping discriminatory personal data. Quantifying career impact with concrete metrics (e.g., TPS, latency reduction, cost savings).",
+              es: "Eliminar datos personales irrelevantes. Cuantificar logros con métricas concretas (ej: TPS, reducción de latencia, optimización en la nube).",
+              fr: "Suppression des informations personnelles superflues. Quantification de l'impact avec indicateurs clés (TPS, latence réduite, coûts)."
+            },
+            type: "soft" 
+          },
+          { 
+            id: "vp_wissen_outreach", 
+            title: {
+              pt: "Outreach Direto: Wissen Calgary & Relocation",
+              en: "Direct Outreach: Wissen Calgary & Relocation",
+              es: "Contacto Directo: Wissen Calgary & Relocalización",
+              fr: "Approche Directe: Wissen Calgary & Relocalisation"
+            },
+            desc: {
+              pt: "Mapeamento e contato assertivo com tomadores de decisão da Wissen Canadá e empresas com visto (LMIA / Global Skills Strategy).",
+              en: "Targeting recruiters and engineering managers at Wissen Canada and tech consultancies with LMIA/Global Skills visa pipelines.",
+              es: "Identificación y contacto estratégico con recruiters y líderes técnicos en Wissen Canadá y firmas que tramitan visa.",
+              fr: "Ciblage et prise de contact avec les recruteurs et directeurs techniques de Wissen Canada et entreprises avec sponsorship."
+            },
+            type: "soft" 
+          }
+        ]
+      }
+    ];
+
+    const STORAGE_KEY_CHECKED = "vp_fullstack_roadmap_completed";
+    const STORAGE_KEY_NOTES = "vp_fullstack_roadmap_notes";
+    const STORAGE_KEY_LANG = "vp_fullstack_roadmap_lang";
+
+    let currentLang = localStorage.getItem(STORAGE_KEY_LANG) || "pt";
+    let completedTasks = JSON.parse(localStorage.getItem(STORAGE_KEY_CHECKED)) || {};
+    let taskNotes = JSON.parse(localStorage.getItem(STORAGE_KEY_NOTES)) || {};
+    let currentFilter = "all";
+    let currentSearchTerm = "";
+    let debounceTimers = {};
+
+    const container = document.getElementById("roadmap-tree");
+    const progressFill = document.getElementById("progress-fill");
+    const progressPercent = document.getElementById("progress-percent");
+    const resetBtn = document.getElementById("reset-btn");
+    const filterButtons = document.querySelectorAll(".filter-btn");
+    const searchInput = document.getElementById("search-input");
+    const clearSearchBtn = document.getElementById("clear-search-btn");
+    const langButtons = document.querySelectorAll(".lang-btn");
+
+    function applyTranslations() {
+      const t = i18n[currentLang];
+      document.documentElement.lang = currentLang === "en" ? "en" : (currentLang === "es" ? "es" : (currentLang === "fr" ? "fr" : "pt-BR"));
+      
+      document.getElementById("ui-title").textContent = t.title;
+      document.getElementById("ui-subtitle").textContent = t.subtitle;
+      document.getElementById("ui-progress-label").textContent = t.progressLabel;
+      document.getElementById("ui-filter-summary").textContent = t.filterSummary;
+      document.getElementById("search-input").placeholder = t.searchPlaceholder;
+      document.getElementById("btn-filter-all").textContent = t.filterAll;
+      document.getElementById("btn-filter-core").textContent = t.filterCore;
+      document.getElementById("btn-filter-vp").textContent = t.filterVp;
+      document.getElementById("btn-filter-soft").textContent = t.filterSoft;
+      document.getElementById("reset-btn").textContent = t.resetBtn;
+
+      langButtons.forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.lang === currentLang);
+      });
+    }
+
+    function renderRoadmap() {
+      container.innerHTML = "";
+      applyTranslations();
+
+      const t = i18n[currentLang];
+      let visibleCategories = 0;
+      const normalizedSearch = currentSearchTerm.trim().toLowerCase();
+
+      roadmapData.forEach((section) => {
+        const catName = section.category[currentLang] || section.category.pt;
+        const timelineText = section.timeline[currentLang] || section.timeline.pt;
+
+        const filteredTasks = section.tasks.filter((task) => {
+          const taskTitle = (task.title[currentLang] || task.title.pt).toLowerCase();
+          const taskDesc = (task.desc[currentLang] || task.desc.pt).toLowerCase();
+
+          const matchesFilter = currentFilter === "all" || task.type === currentFilter;
+          const matchesSearch = !normalizedSearch || 
+            taskTitle.includes(normalizedSearch) || 
+            taskDesc.includes(normalizedSearch) || 
+            catName.toLowerCase().includes(normalizedSearch);
+
+          return matchesFilter && matchesSearch;
+        });
+
+        if (filteredTasks.length === 0) return;
+
+        visibleCategories++;
+
+        const card = document.createElement("div");
+        card.className = "category-card";
+
+        const headerDiv = document.createElement("div");
+        headerDiv.className = "category-header";
+
+        const title = document.createElement("h2");
+        title.textContent = catName;
+
+        const timeline = document.createElement("div");
+        timeline.className = "category-timeline";
+        timeline.textContent = timelineText;
+
+        headerDiv.appendChild(title);
+        headerDiv.appendChild(timeline);
+        card.appendChild(headerDiv);
+
+        const list = document.createElement("ul");
+        list.className = "task-list";
+
+        filteredTasks.forEach((task) => {
+          const item = document.createElement("li");
+          item.className = `task-item ${completedTasks[task.id] ? "checked" : ""}`;
+
+          const main = document.createElement("div");
+          main.className = "task-main";
+
+          const checkbox = document.createElement("input");
+          checkbox.type = "checkbox";
+          checkbox.checked = !!completedTasks[task.id];
+          checkbox.id = `chk_${task.id}`;
+
+          const content = document.createElement("div");
+          content.className = "task-content";
+
+          const top = document.createElement("div");
+          top.className = "task-top";
+
+          const taskTitle = document.createElement("span");
+          taskTitle.className = "task-title";
+          taskTitle.textContent = task.title[currentLang] || task.title.pt;
+
+          const badge = document.createElement("span");
+          badge.className = `badge ${task.type}`;
+          badge.textContent = task.type === "vp" ? t.badgeVp : (task.type === "soft" ? t.badgeSoft : t.badgeCore);
+
+          top.appendChild(taskTitle);
+          top.appendChild(badge);
+
+          const taskDesc = document.createElement("span");
+          taskDesc.className = "task-desc";
+          taskDesc.textContent = task.desc[currentLang] || task.desc.pt;
+
+          content.appendChild(top);
+          content.appendChild(taskDesc);
+
+          main.appendChild(checkbox);
+          main.appendChild(content);
+
+          main.addEventListener("click", (e) => {
+            if (e.target !== checkbox) {
+              checkbox.checked = !checkbox.checked;
+            }
+            toggleTask(task.id, checkbox.checked);
+          });
+
+          const notesSection = document.createElement("div");
+          notesSection.className = "notes-section";
+
+          const notesHeader = document.createElement("div");
+          notesHeader.className = "notes-header";
+
+          const notesLabel = document.createElement("span");
+          notesLabel.textContent = t.notesLabel;
+
+          const saveStatus = document.createElement("span");
+          saveStatus.className = "notes-status";
+          saveStatus.id = `status_${task.id}`;
+          saveStatus.textContent = t.notesSaved;
+
+          notesHeader.appendChild(notesLabel);
+          notesHeader.appendChild(saveStatus);
+
+          const textarea = document.createElement("textarea");
+          textarea.className = "notes-textarea";
+          textarea.placeholder = t.notesPlaceholder;
+          textarea.value = taskNotes[task.id] || "";
+
+          textarea.addEventListener("input", (e) => {
+            saveNote(task.id, e.target.value);
+          });
+
+          notesSection.appendChild(notesHeader);
+          notesSection.appendChild(textarea);
+
+          item.appendChild(main);
+          item.appendChild(notesSection);
+          list.appendChild(item);
+        });
+
+        card.appendChild(list);
+        container.appendChild(card);
+      });
+
+      if (visibleCategories === 0) {
+        const noResults = document.createElement("div");
+        noResults.className = "no-results";
+        noResults.textContent = `${t.noResults} "${currentSearchTerm}".`;
+        container.appendChild(noResults);
+      }
+
+      updateProgress();
+    }
+
+    function toggleTask(id, isChecked) {
+      if (isChecked) {
+        completedTasks[id] = true;
+      } else {
+        delete completedTasks[id];
+      }
+      localStorage.setItem(STORAGE_KEY_CHECKED, JSON.stringify(completedTasks));
+      
+      const chk = document.getElementById(`chk_${id}`);
+      const itemEl = chk?.closest(".task-item");
+      if (itemEl) {
+        itemEl.classList.toggle("checked", isChecked);
+      }
+
+      updateProgress();
+    }
+
+    function saveNote(id, text) {
+      const statusEl = document.getElementById(`status_${id}`);
+      
+      clearTimeout(debounceTimers[id]);
+      debounceTimers[id] = setTimeout(() => {
+        taskNotes[id] = text;
+        localStorage.setItem(STORAGE_KEY_NOTES, JSON.stringify(taskNotes));
+        
+        if (statusEl) {
+          statusEl.classList.add("visible");
+          setTimeout(() => statusEl.classList.remove("visible"), 1800);
+        }
+      }, 500);
+    }
+
+    function updateProgress() {
+      const totalTasks = roadmapData.reduce((acc, cat) => acc + cat.tasks.length, 0);
+      const doneTasks = Object.keys(completedTasks).length;
+      const percent = totalTasks === 0 ? 0 : Math.round((doneTasks / totalTasks) * 100);
+      const suffix = i18n[currentLang].completedSuffix;
+
+      progressFill.style.width = `${percent}%`;
+      progressPercent.textContent = `${percent}% (${doneTasks}/${totalTasks} ${suffix})`;
+    }
+
+    langButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        currentLang = btn.dataset.lang;
+        localStorage.setItem(STORAGE_KEY_LANG, currentLang);
+        renderRoadmap();
+      });
+    });
+
+    searchInput.addEventListener("input", (e) => {
+      currentSearchTerm = e.target.value;
+      clearSearchBtn.classList.toggle("visible", currentSearchTerm.length > 0);
+      renderRoadmap();
+    });
+
+    clearSearchBtn.addEventListener("click", () => {
+      searchInput.value = "";
+      currentSearchTerm = "";
+      clearSearchBtn.classList.remove("visible");
+      searchInput.focus();
+      renderRoadmap();
+    });
+
+    filterButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        filterButtons.forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        currentFilter = btn.dataset.filter;
+        renderRoadmap();
+      });
+    });
+
+    resetBtn.addEventListener("click", () => {
+      const t = i18n[currentLang];
+      if (confirm(t.confirmReset)) {
+        completedTasks = {};
+        taskNotes = {};
+        localStorage.removeItem(STORAGE_KEY_CHECKED);
+        localStorage.removeItem(STORAGE_KEY_NOTES);
+        renderRoadmap();
+      }
+    });
+
+    renderRoadmap();
+  </script>
+</body>
+</html>
